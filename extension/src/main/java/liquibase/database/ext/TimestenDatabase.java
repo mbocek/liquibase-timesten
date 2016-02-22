@@ -20,9 +20,14 @@ package liquibase.database.ext;
 
 import java.util.Arrays;
 
+import liquibase.CatalogAndSchema;
 import liquibase.database.AbstractJdbcDatabase;
 import liquibase.database.DatabaseConnection;
 import liquibase.exception.DatabaseException;
+import liquibase.logging.LogFactory;
+import liquibase.logging.Logger;
+import liquibase.statement.DatabaseFunction;
+import liquibase.structure.core.Schema;
 
 /**
  * @author Michal Bocek
@@ -31,14 +36,24 @@ import liquibase.exception.DatabaseException;
 public class TimestenDatabase extends AbstractJdbcDatabase {
 
 	private static final String PRODUCT_NAME = "TimesTen";
+	private static final Logger log = LogFactory.getInstance().getLog();;
+	
+	public TimestenDatabase() {
+        super.setCurrentDateTimeFunction("TT_SYSDATE");
+        // Setting list of Timesten native functions
+        dateFunctions.add(new DatabaseFunction("SYSDATE"));
+        dateFunctions.add(new DatabaseFunction("GETDATE"));
+	}
 
 	/* 
 	 * (non-Javadoc)
 	 * @see liquibase.database.Database#getDefaultDriver(java.lang.String)
 	 */
-	public String getDefaultDriver(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDefaultDriver(String url) {
+        if (url.startsWith("jdbc:timesten")) {
+            return "com.timesten.jdbc.TimesTenClientDriver";
+        }
+        return null;
 	}
 
 	/* 
@@ -46,8 +61,7 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
 	 * @see liquibase.database.Database#getDefaultPort()
 	 */
 	public Integer getDefaultPort() {
-		// TODO Auto-generated method stub
-		return null;
+		return 53389;
 	}
 
 	/* 
@@ -62,9 +76,8 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
 	 * (non-Javadoc)
 	 * @see liquibase.database.Database#isCorrectDatabaseImplementation(liquibase.database.DatabaseConnection)
 	 */
-	public boolean isCorrectDatabaseImplementation(DatabaseConnection arg0) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isCorrectDatabaseImplementation(DatabaseConnection connection) throws DatabaseException {
+	    return PRODUCT_NAME.equals(connection.getDatabaseProductName());	
 	}
 
 	/* 
@@ -72,8 +85,7 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
 	 * @see liquibase.database.Database#supportsInitiallyDeferrableColumns()
 	 */
 	public boolean supportsInitiallyDeferrableColumns() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/* 
@@ -81,7 +93,6 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
 	 * @see liquibase.database.Database#supportsTablespaces()
 	 */
 	public boolean supportsTablespaces() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -183,4 +194,45 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
 				"WHERE",
 				"WITH"));
 	}
+	
+	@Override
+	public boolean supportsSchemas() {
+	    return false;
+	}
+	
+	@Override
+	public boolean supportsAutoIncrement() {
+	    return false;
+	}
+	
+	@Override
+	public boolean supportsDDLInTransaction() {
+	    return false;
+	}
+
+	@Override
+	public boolean supportsPrimaryKeyNames() {
+	    return false;
+	}
+	
+    @Override
+    public boolean jdbcCallsCatalogsSchemas() {
+        return true;
+    }
+    
+    @Override
+    public String getJdbcCatalogName(CatalogAndSchema schema) {
+        return null;
+    }
+
+    @Override
+    public String getJdbcSchemaName(CatalogAndSchema schema) {
+        return correctObjectName(schema.getCatalogName() == null ? schema.getSchemaName() : schema.getCatalogName(), Schema.class);
+    }
+    
+    @Override
+    public String getDefaultCatalogName() {//NOPMD
+        return super.getDefaultCatalogName() == null ? null : super.getDefaultCatalogName().toUpperCase();
+    }
+    
 }

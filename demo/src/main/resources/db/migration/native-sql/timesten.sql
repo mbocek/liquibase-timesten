@@ -1,0 +1,1 @@
+select tt_sysdate from dual;
