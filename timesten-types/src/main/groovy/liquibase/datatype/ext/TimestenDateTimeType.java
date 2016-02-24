@@ -35,7 +35,7 @@ public class TimestenDateTimeType extends DateTimeType {
     @Override
     public DatabaseDataType toDatabaseDataType(Database database) {
         if (database instanceof TimestenDatabase) {
-            return new DatabaseDataType("TIMESTAMP", getParameters());
+            return new DatabaseDataType("TT_TIMESTAMP", getParameters());
         }
         
         return super.toDatabaseDataType(database);

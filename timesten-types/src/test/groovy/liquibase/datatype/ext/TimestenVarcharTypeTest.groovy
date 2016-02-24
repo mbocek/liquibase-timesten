@@ -16,21 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.database.ext
+package liquibase.datatype.ext
 
+import liquibase.database.ext.TimestenDatabase
 import spock.lang.Specification
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenDatabaseTest extends Specification {
-	
-	def "test product name"() {
+class TimestenVarcharTypeTest extends Specification {
+
+	def "test data type"() {
 		when:
-		def TimestenDatabase database = new TimestenDatabase()
+		def type = new TimestenVarcharType()
+		for (param in params) {
+			type.addParameter(param)
+		}
 
 		then:
-		assert database.getDatabaseProductName() == "TimesTen"
+		type.toDatabaseDataType(database).toString() == expected
+
+		where:
+		params       | database               | expected
+		[13]         | new TimestenDatabase() | "VARCHAR2(13)"
+		[13, "BYTE"] | new TimestenDatabase() | "VARCHAR2(13, BYTE)"
+		[13, "CHAR"] | new TimestenDatabase() | "VARCHAR2(13, CHAR)"
 	}
 }

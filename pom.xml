@@ -10,6 +10,7 @@
 	
 	<modules>
 		<module>extension</module>
+		<module>timesten-types</module>
 		<module>demo</module>
 	</modules>
 	

@@ -50,7 +50,7 @@
 				<dependencies>
 					<dependency>
 						<groupId>org.liquibase.timesten</groupId>
-						<artifactId>extension</artifactId>
+						<artifactId>timesten-types</artifactId>
 						<version>${project.version}</version>
 					</dependency>
 				</dependencies>

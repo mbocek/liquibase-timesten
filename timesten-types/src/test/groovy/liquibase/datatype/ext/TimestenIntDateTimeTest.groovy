@@ -16,28 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.datatype.ext;
+package liquibase.datatype.ext
 
-import liquibase.database.Database;
-import liquibase.database.ext.TimestenDatabase;
-import liquibase.datatype.DataTypeInfo;
-import liquibase.datatype.DatabaseDataType;
-import liquibase.datatype.LiquibaseDataType;
-import liquibase.datatype.core.IntType;
+import liquibase.database.ext.TimestenDatabase
+import spock.lang.Specification
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-@DataTypeInfo(name = "int", aliases = { "integer", "java.sql.Types.INTEGER", "java.lang.Integer", "serial", "int4", "serial4" }, minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
-public class TimestenIntType extends IntType {
+class TimestenIntDateTimeTest extends Specification {
 
-    @Override
-    public DatabaseDataType toDatabaseDataType(Database database) {
-        if (database instanceof TimestenDatabase) {
-            return new DatabaseDataType("TT_INTEGER");
-        }
+	def "test data type"() {
+		when:
+		def type = new TimestenDateTimeType()
 
-        return super.toDatabaseDataType(database);
-    }
+		then:
+		assert type.toDatabaseDataType(new TimestenDatabase()).toString() == "TT_TIMESTAMP"
+	}
 }

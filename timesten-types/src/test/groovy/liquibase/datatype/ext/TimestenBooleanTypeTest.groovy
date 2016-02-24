@@ -16,21 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.database.ext
+package liquibase.datatype.ext
 
+import liquibase.database.ext.TimestenDatabase
 import spock.lang.Specification
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenDatabaseTest extends Specification {
-	
-	def "test product name"() {
+class TimestenBooleanTypeTest extends Specification {
+
+	def "test data type"() {
 		when:
-		def TimestenDatabase database = new TimestenDatabase()
+		def type = new TimestenBooleanType()
 
 		then:
-		assert database.getDatabaseProductName() == "TimesTen"
+		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
 	}
 }
