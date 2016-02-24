@@ -4,8 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="create: tag for version 1,0" author="author">
-        <tagDatabase tag="2016.2" />
+    <changeSet id="create: tag for version 1.0" author="author">
+        <tagDatabase tag="1.0" />
     </changeSet>
 
     <!-- create simple table -->

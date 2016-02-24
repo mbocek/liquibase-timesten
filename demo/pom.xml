@@ -108,11 +108,11 @@
 			<properties>
 				<ttjdbc.version>11.2.2.8.0</ttjdbc.version>
 		
-				<definition.database.jdbc.schema></definition.database.jdbc.schema>
+				<definition.database.jdbc.schema>test</definition.database.jdbc.schema>
 				<definition.database.jdbc.driver>com.timesten.jdbc.TimesTenClientDriver</definition.database.jdbc.driver>
 				<definition.database.jdbc.url>jdbc:timesten:client:dsn=my_tt;</definition.database.jdbc.url>
-				<definition.database.jdbc.user></definition.database.jdbc.user>
-				<definition.database.jdbc.password></definition.database.jdbc.password>
+				<definition.database.jdbc.user>test</definition.database.jdbc.user>
+				<definition.database.jdbc.password>test</definition.database.jdbc.password>
 			</properties>
 		</profile>
         
