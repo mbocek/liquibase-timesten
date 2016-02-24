@@ -17,6 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ttjdbc.version>11.2.2.8</ttjdbc.version>
 		<liquibase.version>3.4.2</liquibase.version>
+		<groovy.version>2.4.6</groovy.version>
 	</properties>
 
 	<build>
@@ -40,7 +41,13 @@
 						<source>1.6</source>
 						<target>1.6</target>
 					</configuration>
-				</plugin>			    
+				</plugin>
+				
+				<plugin>
+					<groupId>org.codehaus.gmavenplus</groupId>
+					<artifactId>gmavenplus-plugin</artifactId>
+					<version>1.5</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -63,6 +70,18 @@
                 <artifactId>ojdbc6</artifactId>
                 <version>11.2.0.0.0</version>
             </dependency>
+            
+	        <dependency>
+	            <groupId>org.codehaus.groovy</groupId>
+	            <artifactId>groovy-all</artifactId>
+	            <version>${groovy.version}</version>
+			</dependency>    
+	        <dependency>
+	            <groupId>org.spockframework</groupId>
+	            <artifactId>spock-core</artifactId>
+	            <version>1.0-groovy-2.4</version>
+	            <scope>test</scope>
+	        </dependency>			        
 		</dependencies>
 	</dependencyManagement>
 	
