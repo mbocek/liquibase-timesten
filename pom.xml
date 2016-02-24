@@ -16,7 +16,6 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ttjdbc.version>11.2.2.8</ttjdbc.version>
 		<liquibase.version>3.4.2</liquibase.version>
 		<groovy.version>2.4.6</groovy.version>
 	</properties>
@@ -60,17 +59,6 @@
 				<artifactId>liquibase-core</artifactId>
 				<version>${liquibase.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.oracle.timesten</groupId>
-				<artifactId>ttjdbc</artifactId>
-				<version>${ttjdbc.version}</version>
-				<classifier>6</classifier>
-			</dependency>
-            <dependency>
-                <groupId>com.oracle</groupId>
-                <artifactId>ojdbc6</artifactId>
-                <version>11.2.0.0.0</version>
-            </dependency>
             
 	        <dependency>
 	            <groupId>org.codehaus.groovy</groupId>
