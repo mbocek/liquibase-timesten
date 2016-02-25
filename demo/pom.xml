@@ -9,7 +9,7 @@
     </parent>
     <artifactId>demo</artifactId>
     <packaging>pom</packaging>
-    <name>Liquibase Timesten: demo</name>
+    <name>Liquibase Timesten: Demo</name>
 
     <properties>
         <ttjdbc.version>11.2.2.8.0</ttjdbc.version>
