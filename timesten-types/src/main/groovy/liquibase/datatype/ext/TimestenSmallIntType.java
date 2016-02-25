@@ -16,22 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.datatype.ext
+package liquibase.datatype.ext;
 
-import liquibase.database.ext.TimestenDatabase
-import spock.lang.Specification
+import liquibase.database.Database;
+import liquibase.database.ext.TimestenDatabase;
+import liquibase.datatype.DataTypeInfo;
+import liquibase.datatype.DatabaseDataType;
+import liquibase.datatype.LiquibaseDataType;
+import liquibase.datatype.core.SmallIntType;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenIntDateTimeTest extends Specification {
-
-	def "test data type"() {
-		when:
-		def type = new TimestenDateTimeType()
-
-		then:
-		assert type.toDatabaseDataType(new TimestenDatabase()).toString() == "TT_TIMESTAMP"
-	}
+@DataTypeInfo(name="smallint", aliases = {"java.sql.Types.SMALLINT", "int2"}, minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
+public class TimestenSmallIntType extends SmallIntType {
+    @Override
+    public DatabaseDataType toDatabaseDataType(Database database) {
+        if (database instanceof TimestenDatabase){
+            return new DatabaseDataType("TT_SMALLINT", getParameters());
+        }
+        
+        return super.toDatabaseDataType(database);
+    }
 }

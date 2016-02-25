@@ -19,21 +19,21 @@
 package liquibase.datatype.ext
 
 import liquibase.database.ext.TimestenDatabase
-import liquibase.datatype.core.BooleanType;
+import liquibase.datatype.core.DateTimeType;
 import spock.lang.Specification
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenBooleanTypeTest extends Specification {
+class TimestenDateTimeTest extends Specification {
 
 	def "test data type"() {
 		when:
-		def type = new TimestenBooleanType()
+		def type = new TimestenDateTimeType()
 
 		then:
-        assert type instanceof BooleanType
-		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
+        assert type instanceof DateTimeType
+		assert type.toDatabaseDataType(new TimestenDatabase()).toString() == "TT_TIMESTAMP"
 	}
 }

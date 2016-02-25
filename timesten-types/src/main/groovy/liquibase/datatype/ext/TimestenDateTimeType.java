@@ -31,13 +31,13 @@ import liquibase.datatype.core.DateTimeType;
  */
 @DataTypeInfo(name = "datetime", aliases = {"java.sql.Types.DATETIME", "java.util.Date", "smalldatetime", "datetime2"}, minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
 public class TimestenDateTimeType extends DateTimeType {
-    
+
     @Override
     public DatabaseDataType toDatabaseDataType(Database database) {
         if (database instanceof TimestenDatabase) {
             return new DatabaseDataType("TT_TIMESTAMP", getParameters());
         }
-        
+
         return super.toDatabaseDataType(database);
     }
 }

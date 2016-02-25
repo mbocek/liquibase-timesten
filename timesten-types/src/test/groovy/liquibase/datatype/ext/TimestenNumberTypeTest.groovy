@@ -19,21 +19,32 @@
 package liquibase.datatype.ext
 
 import liquibase.database.ext.TimestenDatabase
-import liquibase.datatype.core.BooleanType;
+import liquibase.datatype.core.NumberType
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenBooleanTypeTest extends Specification {
-
-	def "test data type"() {
+class TimestenNumberTypeTest extends Specification {
+    
+    @Unroll
+	def "test data type #expected"() {
 		when:
-		def type = new TimestenBooleanType()
+		def type = new TimestenNumberType()
+		for (param in params) {
+			type.addParameter(param)
+		}
 
 		then:
-        assert type instanceof BooleanType
-		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
+        assert type instanceof NumberType
+		type.toDatabaseDataType(database).toString() == expected
+
+		where:
+		params       | database               | expected
+		[]           | new TimestenDatabase() | "NUMBER"
+		[13]         | new TimestenDatabase() | "NUMBER(13)"
+		[13, 5]      | new TimestenDatabase() | "NUMBER(13, 5)"
 	}
 }

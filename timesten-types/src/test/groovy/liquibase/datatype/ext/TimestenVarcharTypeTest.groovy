@@ -19,15 +19,18 @@
 package liquibase.datatype.ext
 
 import liquibase.database.ext.TimestenDatabase
+import liquibase.datatype.core.VarcharType;
 import spock.lang.Specification
+import spock.lang.Unroll;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
 class TimestenVarcharTypeTest extends Specification {
-
-	def "test data type"() {
+    
+    @Unroll
+	def "test data type #expected"() {
 		when:
 		def type = new TimestenVarcharType()
 		for (param in params) {
@@ -35,6 +38,7 @@ class TimestenVarcharTypeTest extends Specification {
 		}
 
 		then:
+        assert type instanceof VarcharType
 		type.toDatabaseDataType(database).toString() == expected
 
 		where:

@@ -16,24 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.datatype.ext
+package liquibase.datatype.ext;
 
-import liquibase.database.ext.TimestenDatabase
-import liquibase.datatype.core.BooleanType;
-import spock.lang.Specification
+import liquibase.database.Database;
+import liquibase.database.ext.TimestenDatabase;
+import liquibase.datatype.DataTypeInfo;
+import liquibase.datatype.DatabaseDataType;
+import liquibase.datatype.LiquibaseDataType;
+import liquibase.datatype.core.TimestampType;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenBooleanTypeTest extends Specification {
+@DataTypeInfo(name = "timestamp", aliases = { "java.sql.Types.TIMESTAMP", "java.sql.Timestamp", "timestamptz" }, minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
+public class TimestenTimestampType extends TimestampType {
 
-	def "test data type"() {
-		when:
-		def type = new TimestenBooleanType()
+    @Override
+    public DatabaseDataType toDatabaseDataType(Database database) {
+        if (database instanceof TimestenDatabase){
+            return new DatabaseDataType("TT_TIMESTAMP", getParameters());
+        }
 
-		then:
-        assert type instanceof BooleanType
-		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
-	}
+        return super.toDatabaseDataType(database);
+    }
 }

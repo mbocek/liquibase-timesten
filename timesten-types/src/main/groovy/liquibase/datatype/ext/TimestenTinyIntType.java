@@ -16,24 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.datatype.ext
+package liquibase.datatype.ext;
 
-import liquibase.database.ext.TimestenDatabase
-import liquibase.datatype.core.BooleanType;
-import spock.lang.Specification
+import liquibase.database.Database;
+import liquibase.database.ext.TimestenDatabase;
+import liquibase.datatype.DataTypeInfo;
+import liquibase.datatype.DatabaseDataType;
+import liquibase.datatype.LiquibaseDataType;
+import liquibase.datatype.core.TinyIntType;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenBooleanTypeTest extends Specification {
-
-	def "test data type"() {
-		when:
-		def type = new TimestenBooleanType()
-
-		then:
-        assert type instanceof BooleanType
-		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
-	}
+@DataTypeInfo(name="tinyint", aliases = "java.sql.Types.TINYINT", minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
+public class TimestenTinyIntType extends TinyIntType {
+    @Override
+    public DatabaseDataType toDatabaseDataType(Database database) {
+        if (database instanceof TimestenDatabase){
+            return new DatabaseDataType("TT_TINYINT", getParameters());
+        }
+        
+        return super.toDatabaseDataType(database);
+    }
 }

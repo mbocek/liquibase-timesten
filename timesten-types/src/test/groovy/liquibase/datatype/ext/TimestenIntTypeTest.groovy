@@ -19,6 +19,7 @@
 package liquibase.datatype.ext
 
 import liquibase.database.ext.TimestenDatabase
+import liquibase.datatype.core.IntType
 import spock.lang.Specification
 
 /**
@@ -32,6 +33,7 @@ class TimestenIntTypeTest extends Specification {
 		def type = new TimestenIntType()
 
 		then:
+        assert type instanceof IntType
 		assert type.toDatabaseDataType(new TimestenDatabase()).toString() == "TT_INTEGER"
 	}
 }

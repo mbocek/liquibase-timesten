@@ -16,24 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package liquibase.datatype.ext
+package liquibase.datatype.ext;
 
-import liquibase.database.ext.TimestenDatabase
-import liquibase.datatype.core.BooleanType;
-import spock.lang.Specification
+import liquibase.database.Database;
+import liquibase.database.ext.TimestenDatabase;
+import liquibase.datatype.DataTypeInfo;
+import liquibase.datatype.DatabaseDataType;
+import liquibase.datatype.LiquibaseDataType;
+import liquibase.datatype.core.DoubleType;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-class TimestenBooleanTypeTest extends Specification {
-
-	def "test data type"() {
-		when:
-		def type = new TimestenBooleanType()
-
-		then:
-        assert type instanceof BooleanType
-		type.toDatabaseDataType(new TimestenDatabase()).toString() == "NUMBER(1)"
-	}
+@DataTypeInfo(name="double", aliases = {"java.sql.Types.DOUBLE", "java.lang.Double"}, minParameters = 0, maxParameters = 2, priority = LiquibaseDataType.PRIORITY_DATABASE)
+public class TimestenDoubleType extends DoubleType {
+    @Override
+    public DatabaseDataType toDatabaseDataType(Database database) {
+        if (database instanceof TimestenDatabase){
+            return new DatabaseDataType("BINARY_DOUBLE", getParameters());
+        }
+        
+        return super.toDatabaseDataType(database);
+    }
 }

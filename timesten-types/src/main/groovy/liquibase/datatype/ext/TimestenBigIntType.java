@@ -23,30 +23,20 @@ import liquibase.database.ext.TimestenDatabase;
 import liquibase.datatype.DataTypeInfo;
 import liquibase.datatype.DatabaseDataType;
 import liquibase.datatype.LiquibaseDataType;
-import liquibase.datatype.core.BooleanType;
+import liquibase.datatype.core.BigIntType;
 
 /**
  * @author Michal Bocek
  * @since 1.0.0
  */
-@DataTypeInfo(name = "boolean", aliases = {"java.sql.Types.BOOLEAN", "java.lang.Boolean", "bit"}, minParameters = 0, maxParameters = 0, priority = LiquibaseDataType.PRIORITY_DATABASE)
-public class TimestenBooleanType extends BooleanType {
-
+@DataTypeInfo(name="bigint", aliases = {"java.sql.Types.BIGINT", "java.math.BigInteger", "java.lang.Long", "integer8", "bigserial", "serial8", "int8"}, minParameters = 0, maxParameters = 1, priority = LiquibaseDataType.PRIORITY_DATABASE)
+public class TimestenBigIntType extends BigIntType {
     @Override
     public DatabaseDataType toDatabaseDataType(Database database) {
-        if (database instanceof TimestenDatabase) {
-            return new DatabaseDataType("NUMBER", 1);
+        if (database instanceof TimestenDatabase){
+            return new DatabaseDataType("TT_BIGINT", getParameters());
         }
-
+        
         return super.toDatabaseDataType(database);
-    }
-
-    @Override
-    protected boolean isNumericBoolean(Database database) {
-        if (database instanceof TimestenDatabase) {
-            return true;
-        }
-
-        return super.isNumericBoolean(database);
     }
 }
