@@ -1,5 +1,7 @@
 # liquibase-timesten
 
+[![Build Status](https://travis-ci.org/mbocek/liquibase-timesten.svg?branch=master)](https://travis-ci.org/mbocek/liquibase-timesten)
+
 
 * run demo: ```mvn clean install & mvn -pl demo clean package -Pdev,timesten liquibase:update```
 * clean checksums: ```mvn clean install & mvn -pl demo clean package -Pdev,timesten liquibase:clearCheckSums```
