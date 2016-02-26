@@ -1,3 +1,19 @@
 language: java
 jdk: oraclejdk7
 script: mvn clean package -B
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "KEjore7JpOemfO8UXX13y8RVXNNCsuj9JBry/rLc4N7bsTd2cFQC/Cvn1IdBwYI/pbXrdRYTdAjQh/UebpV9JFEo990LbkD6zIMmP/HDmRAbiFp2WEX6MZhC+rjK68/qn+WZVsWJcJOrnqP36P1fnI8Ps0fXeoJF2FdOJTMpNKTwvwX3D0tZCkHjsoq+FBqSXasXfI1KXK7fLxYRq46KSbj5JcQBBtZ5TKjNuSu6GfWvgOhRPGxEei5euRoZdbMHB+pZQlGBh6StGTs9Y7FolTwsSI6JWLmJ3MBofiWPoef+Bf+eHLW+c/ExIkeVI8O/kY4DublEYTDiQVRcbxSJV1+yNkeR+fSyw6ny0Q5wdrxfRiuFPcI5vQ3PPkckjK7/dBnEHgtuEaEScUnmYriuEPgIHTeOZHLGGEJIU0PQOczoT7UogFUgimC95s6Wvau5YKXIx0+76iwIBzfheDaj1eddRn5kgh2U48xD63mT/NaGPOIxs+7kGW50xWVXFYaEWCWQfsDV1j82gQGOQTvF0zFH/NhvSIViYuW5S0nANgiytGVdYNqD0qDlLozHlE1wtUYoffMJw3Q/kkKadwIyVtgFVhSpRFNc5O6P6Cv+xwyD2BoCzpkzGTd7ghQmr4Tc8wVCiFksCHTCYzpJKLp0IgJkDdpURH7kgAkfjLPrteY="
+
+addons:
+  coverity_scan:
+    project:
+      name: "mbocek/liquibase-timesten"
+      description: "Build submitted via Travis CI"
+    notification_email: michal.bocek@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan
