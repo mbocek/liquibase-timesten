@@ -20,4 +20,80 @@
 		</createTable>
 	</changeSet>
 
+    <!-- create simple table -->
+    <changeSet id="#2" author="author">
+        <createTable tableName="Master" remarks="Master table">
+            <column name="ID" type="Integer">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="TEXT" type="String(20)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="Detail" remarks="Detail table">
+            <column name="ID" type="Integer">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="MASTER_ID" type="Integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="TEXT" type="String(20)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="FK_MASTER_DETAIL"
+                    baseTableName="DETAIL" baseColumnNames="MASTER_ID"
+                    referencedTableName="MASTER" referencedColumnNames="ID" />
+
+        <createSequence sequenceName="master_seq" 
+                    incrementBy="1" 
+                    maxValue="9999999999" 
+                    startValue="1" />        
+        <createSequence sequenceName="detail_seq" 
+                    incrementBy="1" 
+                    maxValue="9999999999" 
+                    startValue="1" />        
+    </changeSet>
+
+    <!-- insert data -->
+    <changeSet id="#3" author="author">
+        <insert tableName="master">
+            <column name="id" valueComputed="master_seq.nextval"/>
+            <column name="text" value="Test master data"/>
+        </insert>
+        <insert tableName="detail">
+            <column name="id" valueComputed="detail_seq.nextval"/>
+            <column name="master_id" valueComputed="master_seq.currval"/>
+            <column name="text" value="Test detail data"/>
+        </insert>
+        <rollback>
+            delete from detail;
+            delete from master;
+        </rollback>        
+    </changeSet>
+
+    <!-- create unique index -->
+    <changeSet id="#4" author="author">
+        <createIndex indexName="idx_detail_unique_text"
+                tableName="detail"
+                unique="true">
+            <column name="master_id"/>
+            <column name="text"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- create view on master/detail-->
+    <changeSet id="#5" author="author">
+        <createView replaceIfExists="false"
+            viewName="view_masterdetail">
+            <![CDATA[
+                select m.text as master_text, d.text as detail_text  
+                from master m 
+                join detail d on m.id = d.master_id
+            ]]>
+            </createView>
+    </changeSet>
+
 </databaseChangeLog>
