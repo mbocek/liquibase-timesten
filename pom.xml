@@ -17,7 +17,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <liquibase.version>3.4.2</liquibase.version>
+        <liquibase.version>3.5.0-SNAPSHOT</liquibase.version>
         <groovy.version>2.4.6</groovy.version>
     </properties>
 

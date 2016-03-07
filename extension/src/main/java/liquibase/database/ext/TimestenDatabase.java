@@ -55,6 +55,11 @@ public class TimestenDatabase extends AbstractJdbcDatabase {
         return null;
     }
 
+    @Override
+    public Integer getFetchSize() {
+        return 128;
+    }
+    
     /* (non-Javadoc)
      * @see liquibase.database.Database#getDefaultPort()
      */
