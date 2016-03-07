@@ -1,3 +1,5 @@
+language: java
+jdk: oraclejdk7
 env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
@@ -14,6 +16,9 @@ addons:
     build_command:   "mvn -DskipTests=true compile"
     branch_pattern: master
 
-language: java
-jdk: oraclejdk7
+before_install:
+    - git clone https://github.com/liquibase/liquibase.git liquibase
+    - cd liquibase
+    - mvn -B -pl liquibase-core clean install -DskipTests 
+    
 script: mvn clean package -B
