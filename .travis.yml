@@ -1,15 +1,12 @@
 language: java
 jdk: oraclejdk7
 
-before_script:
-    - git clone https://github.com/liquibase/liquibase.git tmp/liquibase
-    - cd tmp/liquibase
-    - mvn -B -pl liquibase-core clean install -DskipTests 
+before_install:
+    - if [ -z "${COVERITY_SCAN}" ]; then git clone https://github.com/liquibase/liquibase.git tmp/liquibase; fi
+    - if [ -z "${COVERITY_SCAN}" ]; then cd tmp/liquibase; fi
+    - if [ -z "${COVERITY_SCAN}" ]; then mvn -B -pl liquibase-core clean install -DskipTests; fi 
     
 script: mvn clean package -B
-
-after_success:
-    - rm -rf tmp
 
 env:
   global:
