@@ -17,8 +17,8 @@ addons:
     branch_pattern: master
 
 before_install:
-    - git clone https://github.com/liquibase/liquibase.git liquibase
-    - cd liquibase
+    - git clone https://github.com/liquibase/liquibase.git tmp/liquibase
+    - cd tmp/liquibase
     - mvn -B -pl liquibase-core clean install -DskipTests 
     
 script: mvn clean package -B
