@@ -1,14 +1,14 @@
 language: java
 jdk: oraclejdk7
 
-before_install:
-    - git clone https://github.com/liquibase/liquibase.git tmp/liquibase
-    - cd tmp/liquibase
-    - mvn -B -pl liquibase-core clean install -DskipTests 
-    - cd ../..
-    - rm -rf tmp
+#before_install:
+#    - git clone https://github.com/liquibase/liquibase.git tmp/liquibase
+#    - cd tmp/liquibase
+#    - mvn -B -pl liquibase-core clean install -DskipTests 
+#    - cd ../..
+#    - rm -rf tmp
     
-script: mvn clean package -B
+script: mvn clean install -B
 
 env:
   global:
