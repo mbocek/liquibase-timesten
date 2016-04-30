@@ -15,6 +15,18 @@
         <module>demo</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:https://github.com/mbocek/liquibase-timesten.git</connection>
+        <url>scm:git:https://github.com/mbocek/liquibase-timesten.git</url>
+        <developerConnection>scm:git:https://github.com/mbocek/liquibase-timesten.git</developerConnection>
+    </scm>
+    
+    <developers>
+        <developer>
+            <name>Michal Bocek</name>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <liquibase.version>3.5.0</liquibase.version>
@@ -51,6 +63,13 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencyManagement>
